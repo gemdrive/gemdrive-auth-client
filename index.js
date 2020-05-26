@@ -57,6 +57,15 @@ async function completeAuthorization(options) {
   const state = returnedState.slice(savedState.length);
   urlParams.delete('state');
 
+  const scopeParam = urlParams.get('scope');
+
+  let perms;
+  if (scopeParam) {
+    urlParams.delete('scope');
+
+    perms = parsePermsFromScope(scopeParam);
+  }
+
   const redirParamsStr = decodeURIComponent(urlParams.toString()); 
 
   if (redirParamsStr !== '') {
@@ -89,6 +98,8 @@ async function completeAuthorization(options) {
   return {
     state,
     accessToken,
+    perms,
+    urlParams,
   };
 }
 
@@ -126,6 +137,27 @@ function encodeScopeFromPerms(perms) {
 
   // remove trailing space
   return scope.slice(0, scope.length - 1);
+}
+
+function parsePermsFromScope(scope) {
+
+  const allPerms = [];
+
+  const items = scope.split(' ');
+  for (const item of items) {
+    const perms = {};
+    const params = item.split(';');
+    for (const param of params) {
+      const parts = param.split('=');
+      const key = parts[0];
+      const value = parts[1];
+      perms[key] = value.replace(/\[\]/g, ' ');
+    }
+
+    allPerms.push(perms);
+  }
+
+  return allPerms;
 }
 
 // The following functions were taken from:
