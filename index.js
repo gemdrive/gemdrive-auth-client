@@ -35,8 +35,6 @@ async function authorize(options) {
 
 async function completeAuthorization(options) {
 
-  //validateTokenOptions(options);
- 
   const urlParams = new URLSearchParams(window.location.search);
 
   const code = urlParams.get('code');
@@ -101,22 +99,6 @@ function validateAuthOptions(options) {
 
   const required = [
     'driveUri',
-  ];
-
-  for (const req of required) {
-    if (!options[req]) {
-      throw new Error("Missing " + req);
-    }
-  }
-}
-
-function validateTokenOptions(options) {
-  if (!options) {
-    throw new Error("Must provide options object");
-  }
-
-  const required = [
-    'accessTokenUri',
   ];
 
   for (const req of required) {
