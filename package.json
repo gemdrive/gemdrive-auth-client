@@ -1,0 +1,23 @@
+{
+  "name": "remfs-auth-client",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup --format=umd --file=dist/index.js --output.name=remfsAuthClient -- index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/remfs/remfs-auth-client.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/remfs/remfs-auth-client/issues"
+  },
+  "homepage": "https://github.com/remfs/remfs-auth-client#readme",
+  "devDependencies": {
+    "rollup": "^2.10.9"
+  }
+}
