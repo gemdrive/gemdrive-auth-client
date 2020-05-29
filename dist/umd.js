@@ -12,10 +12,12 @@
     localStorage.setItem('pkceCodeVerifier', pkceCodeVerifier);
     const pkceCodeChallenge = await pkceChallengeFromVerifier(pkceCodeVerifier);
 
+    const redirectUri = options.redirectUri ? options.redirectUri : window.location.href;
+
     let authUrl = options.driveUri + '?pauth-method=authorize'
       + `&response_type=code`
       + `&client_id=${encodeURIComponent(window.location.origin)}`
-      + `&redirect_uri=${encodeURIComponent(window.location.href)}`
+      + `&redirect_uri=${encodeURIComponent(redirectUri)}`
       + `&code_challenge=${encodeURIComponent(pkceCodeChallenge)}`
       + `&code_challenge_method=S256`;
 
@@ -136,6 +138,10 @@
         const path = permParams.path;
         const trimmedPath = path.length > 1 && path.endsWith('/') ? path.slice(0, path.length - 1) : path;
         scope += `;path=${trimmedPath.replace(/ /g, '[]')}`;
+      }
+
+      if (permParams.hint) {
+        scope += `;hint=${permParams.hint.replace(/ /g, '[]')}`;
       }
 
       scope += ' ';
