@@ -23,7 +23,7 @@ async function authorize(options) {
   const stateCode = generateRandomString();
   localStorage.setItem('oauthState', stateCode);
 
-  localStorage.setItem('remfsAuthDriveUri', options.driveUri);
+  localStorage.setItem('gemdriveAuthDriveUri', options.driveUri);
 
   if (options.state) {
     authUrl += `&state=${encodeURIComponent(stateCode + options.state)}`;
@@ -53,8 +53,8 @@ async function completeAuthorization(options) {
     window.location = window.location.origin + window.location.pathname;
   }
 
-  const driveUri = localStorage.getItem('remfsAuthDriveUri');
-  localStorage.removeItem('remfsAuthDriveUri');
+  const driveUri = localStorage.getItem('gemdriveAuthDriveUri');
+  localStorage.removeItem('gemdriveAuthDriveUri');
 
   const state = returnedState.slice(savedState.length);
   urlParams.delete('state');
