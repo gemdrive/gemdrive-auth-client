@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.remfsAuthClient = {}));
+  (global = global || self, factory(global.gemdriveAuthClient = {}));
 }(this, (function (exports) { 'use strict';
 
   async function authorize(options) {
@@ -29,7 +29,7 @@
     const stateCode = generateRandomString();
     localStorage.setItem('oauthState', stateCode);
 
-    localStorage.setItem('remfsAuthDriveUri', options.driveUri);
+    localStorage.setItem('gemdriveAuthDriveUri', options.driveUri);
 
     if (options.state) {
       authUrl += `&state=${encodeURIComponent(stateCode + options.state)}`;
@@ -59,8 +59,8 @@
       window.location = window.location.origin + window.location.pathname;
     }
 
-    const driveUri = localStorage.getItem('remfsAuthDriveUri');
-    localStorage.removeItem('remfsAuthDriveUri');
+    const driveUri = localStorage.getItem('gemdriveAuthDriveUri');
+    localStorage.removeItem('gemdriveAuthDriveUri');
 
     const state = returnedState.slice(savedState.length);
     urlParams.delete('state');
