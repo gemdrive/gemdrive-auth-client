@@ -32,6 +32,16 @@ async function authorize(options) {
     authUrl += `&state=${encodeURIComponent(stateCode)}`;
   }
 
+  // TODO: This doesn't appear to work in Firefox private mode, at least not on
+  // the first try in a new private window. localStorage.setItem doesn't seem
+  // to complete before the redirect, such that when the OAuth server redirects
+  // back, the saved state isn't there. Steps to reproduce:
+  // 1. Open new private window in Firefox
+  // 2. Begin authorization flow from a GemDrive app
+  // 3. Attempt to complete flow, but it fails because of missing oauthState,
+  //    which should be there because of the setItem above.
+  // Adding a setTimeout for 500ms seems to fix it, but I don't know what the
+  // root cause is.
   window.location.href = authUrl;
 }
 
